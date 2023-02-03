@@ -1,0 +1,10 @@
+
+.back-icon-wrapper {
+    position: relative;
+}
+
+.back-icon {
+    position: absolute;
+    top: 0px;
+    left: -56px;
+}
