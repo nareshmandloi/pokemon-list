@@ -1,10 +1,67 @@
-
 .back-icon-wrapper {
-    position: relative;
+  position: relative;
 }
 
 .back-icon {
-    position: absolute;
-    top: 0px;
-    left: -56px;
+  position: absolute;
+  top: 0px;
+  left: -56px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  margin: 1rem 0;
+  padding: 0;
+}
+
+.pagination li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 2rem;
+  height: 2rem;
+  margin: 0 0.5rem;
+  border: 1px solid gray;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.pagination li.active {
+  background-color: yellow;
+  /* color: white; */
+}
+
+.pagination li:not(.active):hover {
+  background-color: lightgray;
+}
+
+.pagination li.prev,
+.pagination li.next {
+  width: 3rem;
+  cursor: pointer;
+}
+
+.pagination li.prev:before,
+.pagination li.next:after {
+  content: "";
+  display: block;
+  width: 0.5rem;
+  height: 1rem;
+  border: 1px solid #0000;
+  transform: rotate(45deg);
+}
+
+.pagination li.prev:before {
+  margin-bottom: 0.5rem;
+}
+
+.pagination li.next:after {
+  margin-top: 0.5rem;
+}
+
+.pagination li.prev {
+  transform: rotate(180deg);
 }

@@ -1,11 +1,7 @@
 .welcome-wrapper {
-    background-image: url('https://hdwallpaperim.com/wp-content/uploads/2017/08/24/120422-Pokemon-748x421.jpg');
-    /* width: 100%;*/
-    height: 100vh; 
-    background-size: cover;
-    background-position: center;
-}
-
-.title {
-    padding-top: 24%;
+  background-image: url("https://hdwallpaperim.com/wp-content/uploads/2017/08/24/120422-Pokemon-748x421.jpg");
+  /* width: 100%;*/
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
 }
