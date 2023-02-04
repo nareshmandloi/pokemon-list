@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import store from '../../store';
-import { pokemonList } from '../../store/reducer/index'
+import { pokemonList } from '../../store/reducer/pokemonSlice'
 import Card from '../card';
 import { BsFillArrowLeftCircleFill } from 'react-icons/bs'
 import './styles.css';

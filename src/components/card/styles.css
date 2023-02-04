@@ -1,6 +1,7 @@
 .card {
     margin: 15px;
     transition: transform 0.3s;
+    cursor: pointer;
   }
   
   .card:hover {
