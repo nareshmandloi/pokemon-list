@@ -4,7 +4,6 @@ import ReactModal from "react-modal";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const Modal = (props) => {
-  debugger;
   const [isOpen, setIsOpen] = useState(props.isOpen);
 
   const handleEvent = () => {

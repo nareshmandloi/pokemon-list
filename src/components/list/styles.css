@@ -44,9 +44,9 @@
   cursor: pointer;
 }
 
-/* a {
+a {
   text-decoration: none;
-} */
+}
 
 .pagination li.prev:before,
 .pagination li.next:after {

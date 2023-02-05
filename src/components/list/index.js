@@ -34,14 +34,16 @@ const List = () => {
       .catch((error) => {
         console.log(error);
       });
+  }, []);
 
+  useEffect(() => {
     axios
       .get(
         `https://pokeapi.co/api/v2/pokemon??offset=${offset}&limit=${perPage}`
       )
       .then((res) => {
         // store.dispatch(pokemonList(res.data.results));
-        // setPokemonList(res.data.results);
+        setPokemon(res.data.results);
         setCurrentPage(Math.ceil(res.data.count / perPage));
         setPokemonDetails([]);
         setPokemonDetailsCopy([]);
@@ -62,14 +64,6 @@ const List = () => {
         console.log(error);
       });
   }, [offset, perPage]);
-
-  // const handlePageClick = (data) => {
-  //   data.selected += 1;
-  //   const selectedPage = data.selected;
-  //   const newOffset = selectedPage * perPage;
-  //   setCurrentPage(selectedPage);
-  //   setOffset(newOffset);
-  // };
 
   const handlePageClick = (data) => {
     const selectedPage = data.selected;
