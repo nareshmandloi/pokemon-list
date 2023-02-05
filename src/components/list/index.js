@@ -1,29 +1,22 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-// import store from "../../store";
-// import { pokemonList } from "../../store/reducer/pokemonSlice";
-// import { BsFillArrowLeftCircleFill } from "react-icons/bs";
 import Card from "../card";
 import "./styles.css";
 import Select from "react-select";
 import Pagination from "react-paginate";
 
 const List = () => {
-  //   const [pokemonList, setPokemonList] = useState();
   const [pokemonDetails, setPokemonDetails] = useState([]);
   const [pokemonDetailsCopy, setPokemonDetailsCopy] = useState([]);
   const [pokemonType, setPokemonType] = useState();
+  const [selectedPokemonName, setSelectedPokemonName] = useState();
   const [selectedType, setSelectedType] = useState();
   const [pokemon, setPokemon] = useState([]);
+  const [pokemonCopy, setPokemonCopy] = useState([]);
   const [offset, setOffset] = useState(0);
-  const [perPage, setPerPage] = useState(20);
+  const [perPage] = useState(20);
   const [currentPage, setCurrentPage] = useState(0);
-
-  const options = [
-    { value: "chocolate", label: "Chocolate" },
-    { value: "strawberry", label: "Strawberry" },
-    { value: "vanilla", label: "Vanilla" },
-  ];
+  const [isClearable, setIsClearable] = useState(true);
 
   useEffect(() => {
     axios
@@ -37,13 +30,17 @@ const List = () => {
   }, []);
 
   useEffect(() => {
+   setPokemonDetails(pokemonDetailsCopy);
+  }, [isClearable]);
+
+  useEffect(() => {
     axios
       .get(
-        `https://pokeapi.co/api/v2/pokemon??offset=${offset}&limit=${perPage}`
+        `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${perPage}`
       )
       .then((res) => {
-        // store.dispatch(pokemonList(res.data.results));
         setPokemon(res.data.results);
+        setPokemonCopy(res.data.results);
         setCurrentPage(Math.ceil(res.data.count / perPage));
         setPokemonDetails([]);
         setPokemonDetailsCopy([]);
@@ -56,7 +53,9 @@ const List = () => {
                 setPokemonDetailsCopy((prev) => [...prev, ...[response.data]]);
               }
             })
-            .catch(console.log);
+            .catch((error) => {
+              console.log(error);
+            });
           return "";
         });
       })
@@ -66,6 +65,7 @@ const List = () => {
   }, [offset, perPage]);
 
   const handlePageClick = (data) => {
+    console.log(pokemon)
     const selectedPage = data.selected;
     setOffset((selectedPage + 1) * perPage);
   };
@@ -79,8 +79,7 @@ const List = () => {
 
   useEffect(() => {
     // TODO: filter based on type selected
-    const filterdResult = pokemonDetailsCopy.filter((p) => {
-      //pokemonDetailsCopy is the copy of pokenmon list with all detais, keeping it for fiter only
+    const filteredResult = pokemonDetailsCopy.filter((p) => {
       const typesArr = p.types?.map((obj) => {
         const { type } = obj;
         return type.name;
@@ -90,7 +89,7 @@ const List = () => {
       }
       return isMatch(typesArr, selectedType);
     });
-    setPokemonDetails([...filterdResult]); // list of pokenmon with details
+    setPokemonDetails([...filteredResult]);
   }, [selectedType, pokemonDetailsCopy]);
 
   const getOptionName = (option) => option.name;
@@ -99,8 +98,19 @@ const List = () => {
     setSelectedType(type);
   };
 
+  useEffect(() => {
+   if(selectedPokemonName) {
+    const pokemonByName = pokemonDetailsCopy.filter((ele) => selectedPokemonName.name === ele.name);
+    setPokemonDetails(pokemonByName);
+   }
+  }, [pokemonDetailsCopy, selectedPokemonName]);
+
+  const onNameChange = (data) => {
+    setSelectedPokemonName(data);
+  }
+
   const renderedPokemonList = pokemonDetails.map((pokemon, index) => {
-    return <Card key={index} pokemon={pokemon} />;
+    return <Card key={index+1} pokemon={pokemon} />;
   });
 
   return (
@@ -113,9 +123,13 @@ const List = () => {
         </div>
         <div className="col-4">
           <Select
+            getOptionLabel={getOptionName}
+            getOptionValue={getOptionName}
             className="px-4"
-            options={options}
+            onChange={onNameChange}
+            options={pokemonCopy  }
             placeholder="Select your favorite pokemon"
+            isClearable={isClearable}
           />
         </div>
         <div className="col-4">

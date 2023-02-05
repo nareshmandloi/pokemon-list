@@ -6,6 +6,7 @@ import Modal from "../modal";
 import "./styles.css";
 
 const Card = (props) => {
+  debugger;
   const [pokemonDetails, setPokemonDetails] = useState(props.pokemon);
   const [showModal, setShowModal] = useState(false);
 
