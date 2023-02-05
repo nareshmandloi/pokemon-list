@@ -42,6 +42,9 @@ const List = () => {
       .then((res) => {
         // store.dispatch(pokemonList(res.data.results));
         // setPokemonList(res.data.results);
+        setCurrentPage(Math.ceil(res.data.count / perPage));
+        setPokemonDetails([]);
+        setPokemonDetailsCopy([]);
         res.data.results.map((pokemon) => {
           axios
             .get(pokemon.url)
@@ -60,12 +63,17 @@ const List = () => {
       });
   }, [offset, perPage]);
 
+  // const handlePageClick = (data) => {
+  //   data.selected += 1;
+  //   const selectedPage = data.selected;
+  //   const newOffset = selectedPage * perPage;
+  //   setCurrentPage(selectedPage);
+  //   setOffset(newOffset);
+  // };
+
   const handlePageClick = (data) => {
-    data.selected += 1;
     const selectedPage = data.selected;
-    const newOffset = selectedPage * perPage;
-    setCurrentPage(selectedPage);
-    setOffset(newOffset);
+    setOffset((selectedPage + 1) * perPage);
   };
 
   const isMatch = (arr1, arr2) => {
@@ -130,11 +138,11 @@ const List = () => {
       <br />
       <div className="row">{renderedPokemonList}</div>
       <Pagination
-        previousLabel={"prev"}
-        nextLabel={"next"}
+        previousLabel={"<"}
+        nextLabel={">"}
         breakLabel={"..."}
         breakClassName={"break-me"}
-        pageCount={1000 / perPage}
+        pageCount={currentPage}
         marginPagesDisplayed={2}
         pageRangeDisplayed={5}
         onPageChange={handlePageClick}

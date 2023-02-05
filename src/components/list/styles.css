@@ -40,9 +40,13 @@
 
 .pagination li.prev,
 .pagination li.next {
-  width: 3rem;
+  /* width: 3rem; */
   cursor: pointer;
 }
+
+/* a {
+  text-decoration: none;
+} */
 
 .pagination li.prev:before,
 .pagination li.next:after {
